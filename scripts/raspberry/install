@@ -1,0 +1,115 @@
+apt-get install zlib1g-dev gcc make git autoconf autogen automake pkg-config
+git clone https://github.com/firehol/netdata.git --depth=1
+cd netdata ./netdata-installer.sh
+/usr/sbin/netdata
+
+http://127.0.0.1:19999/
+
+-----------------------------------------------------
+
+vi /etc/sudoers
+ToFF ALL=(ALL) NOPASSWD: ALL
+
+apt-get install tightvncserver
+update-rc.d tightvnc defaults
+
+
+xxxx:/volume1/Download/ /mnt/Download nfs nouser,atime,auto,rw,dev,exec,suid 0   0
+
+//xxxxxxxx/6To /mnt/6To cifs username=****,password=*****,uid=1000,gid=1000,iocharset=utf8 0 0
+
+
+-----------------------------------------------------
+/etc/lightdm/lightdm.conf autologin-user=ToFF
+
+update-alternatives --config x-session-manager
+choose /usr/bin/Xfce4-session
+
+
+Wifi wlan0: 74:da:38:28:8e:db 
+
+
+/etc/network/interfaces
+
+auto wlan0
+iface wlan0 inet dhcp
+	wpa-ssid "XXXXXXXXXXXXX"
+	wpa-psk "xxxx"
+
+
+
+---------------------------------------------------------------
+Dans /etc/zsh/zlogin
+/home/scripts/sysinfo.sh
+
+-----------------------------------------------------------------
+
+mount -t nfs -o rw 192.168.2.2:/volume1/Download /mnt/Download
+fstab:
+192.168.2.2:/volume1/Download/ /mnt/Download nfs nouser,atime,auto,rw,dev,exec,suid 0   0
+
+
+apt-get install rpi-update vim mlocate net-tools tcpdump git zsh vlc motion kodi
+
+apt-get install hdparm sysbench
+hdparm -t -T /dev/mmcblk0p2
+sysbench --test=cpu --cpu-max-prime=20000 run
+
+apt-get install xfce4 xfce4-goodies
+apt-get remove lxappearance lxde lxde-* lxinput lxmenu-data lxpanel lxpolkit lxrandr lxsession* lxsession lxshortcut lxtask lxterminal
+
+apt-get install chromium-browser iceweasel --no-install-recommends
+--no-install-recommends : not to install the recommended packages. (To keep the number of installed packages to a minimum)
+
+apt-get update
+apt-get upgrade -y
+apt-get dist-upgrade -y
+rpi-update
+
+
+
+-------------------------------------------------------------------------------------------
+Camera 
+
+enable camera
+raspi-config
+
+cd /mnt/Download/Cloud/
+raspistill -o image01.jpg
+raspivid -o video.h264 -t 15000
+
+
+disable camera led:  /boot/config.txt :
+disable_camera_led=1
+
+apt-get install motion
+/etc/default/motion
+/etc/motion/motion.conf
+
+mjpg-streamer
+http://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi
+
+crtmpserver
+http://stephane.lavirotte.com/perso/rov/video_streaming.html
+
+/var/www/videostreaming/camera-cfg.arg
+-------------------------------------------------------------------------------------------
+RetroPie
+apt-get update
+apt-get upgrade -y
+apt-get dist-upgrade
+apt-get install -y git dialog
+
+git clone --depth=0 git://github.com/petrockblog/RetroPie-Setup.git
+
+cd RetroPie-Setup
+chmod +x retropie_setup.sh
+sudo ./retropie_setup.sh
+
+Pour lancer RetroPie: emulationstation
+
+Pour configurer un manette :retroarch-joyconfig>> /.retroarch.cfg
+
+Pour tout autre modification il suffit de modifier le fichier retroarch.cfg, un Wiki à etait creer et il est trés bien fait https://github.com/petrockblog/RetroPie-Setup/wiki
+
+
