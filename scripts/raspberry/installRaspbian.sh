@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Make sure only root can run our script
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 USER=<USER>
 PASSWORD=<PASSWORD>
 NAS=<NAS>
@@ -9,7 +15,7 @@ apt-get upgrade -y
 apt-get dist-upgrade -y
 rpi-update
 
-apt-get install zlib1g-dev gcc make git autoconf autogen automake pkg-config tightvncserver rpi-update vim mlocate net-tools tcpdump git zsh vlc motion kodi hdparm sysbench install xfce4 xfce4-goodies iceweasel
+apt-get install samba unrar-free zlib1g-dev gcc make git autoconf autogen automake pkg-config tightvncserver rpi-update vim mlocate net-tools tcpdump zsh vlc motion kodi hdparm sysbench xfce4 xfce4-goodies iceweasel
 
 update-rc.d tightvnc defaults
 echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers

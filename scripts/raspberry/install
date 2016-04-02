@@ -1,3 +1,40 @@
+
+samba
+
+apt-get install samba
+
+root@home:~# pdbedit -a mon_nom-dutilisateur
+root@home:~# smbpasswd mon_nom-dutilisateur
+
+[global]
+
+# Change this to the workgroup/NT-domain name your Samba server will part of
+   workgroup = WORKGROUP
+   dns proxy = no
+   max log size = 1000
+   syslog = 0
+   panic action = /usr/share/samba/panic-action %d
+   server role = standalone server
+   passdb backend = tdbsam
+   obey pam restrictions = yes
+   unix password sync = yes
+   passwd program = /usr/bin/passwd %u
+   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+   pam password change = yes
+   map to guest = bad user
+   usershare allow guests = yes
+[ROMs]
+comment = Retropi
+path = /home/ToFF/RetroPie/roms 
+browseable = yes
+guest ok = no
+valid users = ToFF
+public = no
+admin users = ToFF
+writable = yes
+
+
+-----------------------------------------------------
 apt-get install zlib1g-dev gcc make git autoconf autogen automake pkg-config
 git clone https://github.com/firehol/netdata.git --depth=1
 cd netdata ./netdata-installer.sh
