@@ -4,6 +4,17 @@ dpkg-reconfigure -f noninteractive tzdata
 update-manager -d
 lsb_release -d
 
+
+here=$(dirname $(readlink -f $0))
+SCRIPTNAME=`basename $0`
+extension="${SCRIPTNAME##*.}"
+filename="${SCRIPTNAME%.*}"
+
+trim: 
+Start sed -e 's/^[[:space:]]*//'
+End sed -e 's/[[:space:]]*$//'
+Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+
 DATE=`date +%Y_%m_%d-%H_%M_%S`
 
 cat <file> | grep <?> | awk -F'=' '{ print $2}'

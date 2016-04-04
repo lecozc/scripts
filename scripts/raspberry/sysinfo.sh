@@ -15,6 +15,16 @@ UPTIME=`printf "%d days, %02dh%02dm%02ds" "$days" "$hours" "$mins" "$secs"`
 read one five fifteen rest < /proc/loadavg
 
 URL="http://www.accuweather.com/en/fr/rennes/132537/weather-forecast/132537"
+IP_ETH=$(/sbin/ifconfig eth0|grep "inet addr" | cut -d ":" -f 2 | cut -d " " -f 1 )
+IP_WLAN=$(/sbin/ifconfig wlan0|grep "inet addr" | cut -d ":" -f 2 | cut -d " " -f 1 )
+IP_TXT=""
+if [ -n "$IP_ETH" ] && [ -n "$IP_WLAN" ]; then
+	IP_TXT="IP eth0 ($IP_ETH) / wlan0 ($IP_WLAN)"
+elif [ -z "$IP_ETH" ] && [ -n "$IP_WLAN" ]; then
+	IP_TXT="IP wlan0 ($IP_WLAN)"
+elif [ -n "$IP_ETH" ] && [ -z "$IP_WLAN" ]; then
+	IP_TXT="IP eth0 ($IP_ETH)"
+fi
 
 echo "$(tput setaf 2)
    .~~.   .~~.    $(tput sgr0) Running Processes = `ps ax | wc -l | tr -d " "`  $(tput setaf 2)
@@ -25,8 +35,8 @@ echo "$(tput setaf 2)
 ( : '~'.~.'~' : ) $(tput sgr0) Load = ${one}, ${five}, ${fifteen} (1, 5, 15 min) $(tput setaf 1)
  ~ .~ (   ) ~. ~  $(tput sgr0) Uptime = ${UPTIME} $(tput setaf 1)
   (  : '~' :  )   $(tput sgr0) Lastlog = $(lastlog | grep "`whoami`" | awk '{ print $1" "$3" "$4" "$5" "$6" "$7}') $(tput setaf 1)
-   '~ .~~~. ~'    $(tput sgr0) (CPU: $(sudo vcgencmd get_config arm_freq|awk -F'=' '{ print $2}')MHz / RAM: $(sudo vcgencmd get_config sdram_freq|awk -F'=' '{ print $2}')MHz / Core : $(sudo vcgencmd get_config core_freq|awk -F'=' '{ print $2}')MHz / OvervVoltage:  $(sudo vcgencmd get_config over_voltage|awk -F'=' '{ print $2}') )  $(tput setaf 1)
-       '~'        $(tput sgr0) IP eth0 ($(/sbin/ifconfig eth0|grep "inet addr" | cut -d ":" -f 2 | cut -d " " -f 1 )) / wlan0 ($(/sbin/ifconfig wlan0|grep "inet addr" | cut -d ":" -f 2 | cut -d " " -f 1 ))  $(tput setaf 1)
+   '~ .~~~. ~'    $(tput sgr0) (CPU: $(sudo vcgencmd get_config arm_freq|awk -F'=' '{ print $2}')MHz / RAM: $(sudo vcgencmd get_config sdram_freq|awk -F'=' '{ print $2}')MHz / Core: $(sudo vcgencmd get_config core_freq|awk -F'=' '{ print $2}')MHz / OV: $(sudo vcgencmd get_config over_voltage|awk -F'=' '{ print $2}'|sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') )  $(tput setaf 1)
+       '~'        $(tput sgr0) `echo $IP_TXT`  $(tput setaf 1)
 $(tput sgr0)"
 
 
