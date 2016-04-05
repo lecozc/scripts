@@ -144,6 +144,11 @@ make USE_LIBV4L2=true clean all
 make DESTDIR=/usr install
 
 
+Use this, if you did see mjpg listed in the supported formats:
+$ mjpg_streamer -i "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30 -n" -o "/usr/lib/output_http.so -p 8090 -w /var/www/mjpg_streamer"
+else, add -y flag to the input string:
+$ mjpg_streamer -i "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30 -n -y" -o "/usr/lib/output_http.so -p 8090 -w /var/www/mjpg_streamer"
+
 
 
 crtmpserver
