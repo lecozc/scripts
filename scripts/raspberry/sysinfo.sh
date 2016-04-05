@@ -28,7 +28,7 @@ fi
 
 echo "$(tput setaf 2)
    .~~.   .~~.    $(tput sgr0) Running Processes = `ps ax | wc -l | tr -d " "`  $(tput setaf 2)
-  '. \ ' ' / .'   $(tput sgr0) Rennes=`wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $2": "$16", "$12"°" }'| head -1|awk -F"," '{print $2}'`C $(tput setaf 1)
+  '. \ ' ' / .'   $(tput sgr0) `echo $IP_TXT` $(tput setaf 1)
    .~ .~~~..~.    $(tput sgr0) `sudo /opt/vc/bin/vcgencmd measure_temp | sed -e 's/temp=/Temp = /'`  $(tput setaf 1)
   : .~.'~'.~. :   $(tput sgr0) Dispo = $(df -Ph $PWD | tail -1 | awk '{ print $2}') $(tput setaf 1)
  ~ (   ) (   ) ~  $(tput sgr0) Mem = $(free | grep Mem | awk '{print $3/$2 * 100.0}') % (used) $(tput setaf 1)
@@ -36,10 +36,10 @@ echo "$(tput setaf 2)
  ~ .~ (   ) ~. ~  $(tput sgr0) Uptime = ${UPTIME} $(tput setaf 1)
   (  : '~' :  )   $(tput sgr0) Lastlog = $(lastlog | grep "`whoami`" | awk '{ print $1" "$3" "$4" "$5" "$6" "$7}') $(tput setaf 1)
    '~ .~~~. ~'    $(tput sgr0) (CPU: $(sudo vcgencmd get_config arm_freq|awk -F'=' '{ print $2}')MHz / RAM: $(sudo vcgencmd get_config sdram_freq|awk -F'=' '{ print $2}')MHz / Core: $(sudo vcgencmd get_config core_freq|awk -F'=' '{ print $2}')MHz / OV: $(sudo vcgencmd get_config over_voltage|awk -F'=' '{ print $2}'|sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//') )  $(tput setaf 1)
-       '~'        $(tput sgr0) `echo $IP_TXT`  $(tput setaf 1)
+       '~'        $(tput sgr0)  $(tput setaf 1)
 $(tput sgr0)"
 
-
+#Rennes=`wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $2": "$16", "$12"°" }'| head -1|awk -F"," '{print $2}'`C
 
 
 
