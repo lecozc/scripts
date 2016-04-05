@@ -115,6 +115,12 @@ cd /mnt/Download/Cloud/
 raspistill -o image01.jpg
 raspivid -o video.h264 -t 15000
 
+vim /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+powersave => performance
+or ondemand
+or vim /etc/local.rc
+echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
 
 disable camera led:  /boot/config.txt :
 disable_camera_led=1
@@ -123,8 +129,22 @@ apt-get install motion
 /etc/default/motion
 /etc/motion/motion.conf
 
+http://www.framboise314.fr/une-camera-de-surveillance-video-avec-le-raspberry-pi/
+
+
+---------------
 mjpg-streamer
 http://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi
+http://arduinostuff.blogspot.fr/2013/04/raspberry-pi-webcam-streaming.html
+
+apt-get update && apt-get install libv4l-dev libjpeg8-dev subversion imagemagick uvcdynctrl
+svn co https://mjpg-streamer.svn.sourceforge.net/svnroot/mjpg-streamer mjpg-streamer
+mjpg-streamer/mjpg-streamer
+make USE_LIBV4L2=true clean all
+make DESTDIR=/usr install
+
+
+
 
 crtmpserver
 http://stephane.lavirotte.com/perso/rov/video_streaming.html
