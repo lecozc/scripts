@@ -1,0 +1,109 @@
+#compdef heat
+#autoload
+
+
+__images() {
+    F=/tmp/os_cache/images_${OS_TENANT_NAME}
+    declare -a image_cmd
+    image_cmd=($(awk '{print $1":"$2}' $F))
+    _describe 'images' image_cmd
+}
+
+local -a _1st_arguments
+_1st_arguments=(
+      "action-check:Check that stack resources are in expected states."
+      "action-resume:Resume the stack."
+      "action-suspend:Suspend the stack."
+      "build-info:Retrieve build information."
+      "config-create:Create a software configuration."
+      "config-delete:Delete a software configuration."
+      "config-list:List software configs."
+      "config-show:View details of a software configuration."
+      "deployment-create:Create a software deployment."
+      "deployment-delete:Delete software deployments."
+      "deployment-list:List software deployments."
+      "deployment-metadata-show:Get deployment configuration metadata for the specified server."
+      "deployment-output-show:Show a specific deployment output."
+      "deployment-show:Show the details of a software deployment."
+      "event:DEPRECATED! Use event-show instead."
+      "event-list:List events for a stack."
+      "event-show:Describe the event."
+      "hook-clear:Clear hooks on a given stack."
+      "hook-poll:List resources with pending hook for a stack."
+      "output-list:Show available outputs."
+      "output-show:Show a specific stack output."
+      "resource-list:Show list of resources belonging to a stack."
+      "resource-metadata:List resource metadata."
+      "resource-show:Describe the resource."
+      "resource-signal:Send a signal to a resource."
+      "resource-template:DEPRECATED! Use resource-type-template instead."
+      "resource-type-list:List the available resource types."
+      "resource-type-show:Show the resource type."
+      "resource-type-template:Generate a template based on a resource type."
+      "service-list:List the Heat engines."
+      "snapshot-delete:Delete a snapshot of a stack"
+      "snapshot-list:List the snapshots of a stack."
+      "snapshot-show:Show a snapshot of a stack."
+      "stack-abandon:Abandon the stack."
+      "stack-adopt:Adopt a stack."
+      "stack-cancel-update:Cancel currently running update of the stack"
+      "stack-create:Create the stack."
+      "stack-delete:Delete the stack(s)."
+      "stack-list:List the user's stacks."
+      "stack-preview:Preview the stack."
+      "stack-restore:Restore a snapshot of a stack."
+      "stack-show:Describe the stack."
+      "stack-snapshot:Make a snapshot of a stack."
+      "stack-update:Update the stack."
+      "template-function-list:List the available functions."
+      "template-show:Get the template for the specified stack."
+      "template-validate:Validate a template with parameters."
+      "template-version-list:List the available template versions."
+      "bash-completion:Prints all of the commands and options to stdout."
+      "help:Display help about this program or one of its subcommands."
+
+)
+
+_arguments '*:: :->command'
+
+if (( CURRENT == 1 )); then
+  _describe -t commands "heat help" _1st_arguments
+  return
+fi
+
+local -a _command_args
+case "$words[1]" in
+  image-show)
+    _arguments \
+      '(--human-readable)'{--human-readable}"[Image size human friendly.]"
+    __images
+    ;;
+  image-create)
+    _arguments \
+     '(--id=)'--id="[ID of image to reserve.]" \
+     '(--name=)'--name="[Name of image.]" \
+     '(--store=)'--store="[Store to upload image to.]" \
+     '(--disk-format=)'--disk-format="[Disk format of image. Acceptable formats: ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, and iso.]" \
+     '(--container-format)'--container-format="[Container format of image. Acceptable formats: ami, ari, aki, bare, and ovf]" \
+     '(--owner=)'--owner="[Tenant who should own image.]" \
+     '(--size=)'--size="[Size of image data (in bytes). Only used with -- location and --copy_from.]" \
+  '(--min-disk=)'--min-disk="[Minimum size of disk needed to boot image (in gigabytes).]" \
+  '(--min-ram=)'--min-ram="[Minimum amount of ram needed to boot image (in megabytes).]" \
+  '(--location=)'--location="[Image URL]"\
+  '(--file=)'--file="[file that contains disk image to be uploaded]" \
+  '(--checksum=)'--checksum="[md5 checksum]" \
+  '(--copy-from=)'--copy-from="[Similar to '--location' in usage, but this indicates that the Glance server should immediately copy the data and store it in its configured image store.]" \
+  '(--is-public=)'--is-public="[True|False]" \
+  '(--is-protected=)'--is-public="[True|False prevent from deletion]" \
+  '(--property=)'--property="[<key=value>, Arbitrary property to associate.]" \
+  '(--human-readable)'--human-readable="[Image size human friendly.]"
+    ;;
+  esac
+
+  _arguments \
+  $_command_args \
+  '(--version)'--version'[show programs version number and exit]' \
+  '(--debug)'--debug'[Print debugging output]'\
+  '(--insecure)'--insecure'[Dont verify SSL]'\
+  &&  return 0
+
