@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Delete all docker containers
+#docker rm $(docker ps -a -q)
+# Delete all docker images
+#docker rmi $(docker images -q)
+
 # Make sure only root can run our script
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
