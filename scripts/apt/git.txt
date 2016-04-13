@@ -37,4 +37,9 @@ git revert HEAD --no-edit
 remove tag
 git tag -d oops
 
+merge
+git remote add ohMyZsh https://github.com/robbyrussell/oh-my-zsh.git
+git pull ohMyZsh master
+git push origin
+
 
