@@ -2,8 +2,14 @@ echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
 
 update-manager -d
-lsb_release -d
 
+do-release-upgrade -d
+
+lsb_release -d
+-----------------------------------------------
+/etc/sudoers
+<user> ALL=(ALL) NOPASSWD: ALL
+-----------------------------------------------
 
 here=$(dirname $(readlink -f $0))
 SCRIPTNAME=`basename $0`
