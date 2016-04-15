@@ -42,4 +42,4 @@ git remote add ohMyZsh https://github.com/robbyrussell/oh-my-zsh.git
 git pull ohMyZsh master
 git push origin
 
-
+git status
