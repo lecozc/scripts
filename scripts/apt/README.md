@@ -80,3 +80,311 @@ while true; do
     esac
 done
 ```
+Extraire IP d'un fichier
+```
+cat <file> | grep -Eo ‘([0-9]{1,3}\.){3}[0-9]{1,3}’ | sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4 | uniq
+```
+
+```
+cat /etc/passwd | awk -F":" '{print $1}'
+```
+Détection de l'utilisateur
+```
+if [ $(whoami) = "root" ]
+then
+echo You cannot run this script as root..
+else
+echo You cannot run this script as root..
+fi
+```
+Boucles
+```
+for (( i=0; i<4;i++ ))
+do
+echo $i
+done
+
+for i in {1..3}; do echo \$i; done
+
+for i in `seq 1 5 20`
+do
+echo $i
+done
+
+j=1
+while [ $j -le 3 ]
+do
+echo $j
+j=$(($j+1))
+done
+
+while (( h++ < 3 ))
+do
+echo $h
+done
+
+while read; do
+echo $REPLY
+done < <(find . -type f)
+
+var=$(ls / | (
+while read; do echo $REPLY; done
+))
+
+while read; do
+name=$(echo $REPLY|cut -d ":" -f1)
+echo "Nom : "$name
+done < /etc/passwd
+
+echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
+
+touch test1.csv
+echo "aa;bb;cc" >> test1.csv
+echo "a1;b1;c1" >> test1.csv
+echo "aa;bb;cc"
+echo "a1;b1;c1"
+
+OLDIFS=$IFS
+IFS=";"
+while read status name path
+do
+echo "status:$status-$path"
+done < test1.csv
+IFS=$OLDIFS
+```
+Condition
+```
+var=OK
+if [ "$var" = "OK" ]
+then
+echo "OK"
+elif [ "$var" = "KO" ]
+then
+echo "KO"
+else
+echo "..."
+fi
+
+if [ "$var" = "KO" ] || [ "$var2" = "KO" ]
+...
+
+if [ "$var" = "KO" ] && [ "$var2" = "KO" ]
+....
+
+if [ "$var3"="1" ] && [ "$var" = "KOI" ] || [ "$var3"="1" ] && [ "$var2" = "KO" ]
+if [ "$var3"="1" -a \( "$var" = "KOI" -o  "$var2" = "KO" \) ]
+
+if [ -z "$(rpm -qa )" ]
+then
+echo "missing"
+fi
+
+if [ $(grep -c string /path/to/file) -eq 0 ]...
+
+[ "$var" = "OK" ] && echo "OK" || echo "KO"
+```
+Tester si une chaine/sous-chaine est présente dans un fichier ou dans une chaine.
+```
+if [ $(echo "stringtest" | grep -c "test") -ne 0 ]
+then
+echo "string exists"
+else    
+echo "not exists"
+fi
+
+if [ $(grep -c "test" fileTest.txt) ] ....
+```
+ 
+Comparaison d'entiers - nombres
+```
+[ $a -eq $b ] 	égalité entre a et b
+[ $a -ne $b ] 	inégalité entre a et b
+[ $a -ge $b ] 	supérioté ou égalité de a sur b
+[ $a -gt $b ] 	supériorité stricte de a sur b
+
+[ $a -le $b ]
+
+if (("$a" <= "$b"))
+	infériorité ou égalité de a sur b
+[ $a -lt $b ] 	infériorité stricte de a sur b
+Comparaison de chaine de caractères
+[ -z STRING ]
+	STRING null (vide)
+[ -n STRING ] 	
+
+STRING non null (non vide)
+[ STRING == STRING2 ] 	
+[ STRING != STRING2 ] 	
+[ STRING < STRING2 ] 	
+[ STRING > STRING2  ] 	
+```
+ 
+Teste sur les fichiers
+```
+[ -d FILE ] 	FILE existe et est un répertoire.
+[ -e FILE ] 	FILE existe.
+[ -f FILE ] 	FILE existe et est un fichier classique (-rw-rw-rw- 1er tiret) "regular file"
+
+[ -h FILE ]
+
+[ -L FILE ]
+	FILE existe et est un lien symbolique
+[ -r FILE ] 	FILE existe et est en lecture
+[ -s FILE ] 	FILE existe et sa taille est supérieure à zéro
+[ -w FILE ] 	FILE existe et est en écriture
+[ -x FILE ] 	FILE existe et est exécutable
+[ -O FILE ] 	FILE existe et and appartient au user courant
+[ -G FILE ] 	FILE existe et and appartient au groupe courant
+[ -N FILE ] 	FILE existe et a été modifié depuis la dernière lecture
+[ FILE1 -nt FILE2 ] 	FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
+```
+Variables
+```
+VAR=`ls -a`
+
+VAR=$(ls -a)
+
+-z string is null, that is, has zero length
+
+-n string is not null.
+$# nombre d'args
+
+$? code retour dernière commande.
+
+SCRIPTNAME=`basename $0`
+extension="${SCRIPTNAME##*.}"
+filename="${SCRIPTNAME%.*}"
+
+here=$(dirname $(readlink -f $0))
+grep
+```
+Recherche
+```
+echo "aaa uiii  zaza" | grep -w uiii
+
+Exclusion
+
+echo "aaa uiii" | grep -v aa | grep ui
+
+Recherche multiple
+
+grep -w 'warning\|error\|critical' test.txt
+
+Recherche expression régulière
+
+echo "rereruui uiii aa" | grep -E "^re"
+
+Compte
+
+echo \"rereruui uiii aa\" | grep -c aa
+
+PID
+
+pgrep -u user
+```
+Scripts Purge
+```
+NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
+echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
+
+if [ $NB_EXPORT -gt ${NB_EXPORT_TO_KEEP} ] ; then
+echo "Purge old export" | tee -a $LOG $LOG_TMP
+NB_EXPORT_RM=`expr $NB_EXPORT - $NB_EXPORT_TO_KEEP`
+echo "nb file to delete :"$NB_EXPORT_RM | tee -a $LOG $LOG_TMP
+FILE_TO_DELETE=`ls -lrta ${path}/*.tar.gz 2>/dev/null | sed -n "1,${NB_EXPORT_RM}p" | awk '{print $NF}'`
+echo "file to delete :"$FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+rm -f $FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+else
+echo "No purge to do" | tee -a $LOG $LOG_TMP
+fi
+```
+Afficher les processus ayant une activité réseau
+```
+lsof -Pnl +M -i4
+```
+Fichier ouvert
+```
+lsof -u admin | grep | wc -l
+```
+ 
+find
+```
+Modifiés il y a moins de 24 heures
+
+find . -mtime 0
+
+Modifiés il y a plus de 24 heures
+
+find . -mtime +0
+
+Modifiés il y a moins de 10 minutes
+
+find . -mmin -10
+
+Modifiés entre 24 heures et 48 heures
+
+find . -mtime 1
+
+Modifiés il y a plus de 48 heures
+
+find . -mtime +1
+
+Modifiés entre 1 et 2 minutes
+
+find . -mmin +0 -mmin -2
+
+Permission données
+
+find . -type f -perm -o=w
+
+grep -ir
+
+find . -type f -print0 | xargs -0 -e grep -niH -e 'string'
+
+Supprimer les fichiers cachés
+
+find -type f -name '.*' -exec rm {} \;
+
+Supprimer les répertoires vides
+
+find . -type d -empty -print -exec rmdir -f {} \;
+
+Rechercher selon plusieurs motifs
+
+find -type f \( -name "*.Ext1" -o -name "*.Ext2" \)
+
+Remplacer une chaine dans plusieurs fichiers
+
+find ./ -type f -exec sed -i 's/OLD/NEW/' {} \;
+
+Boucler sur des fichiers/répertoires
+
+find . -type d ! -name . -print | while read dir; do
+...
+done
+```
+
+Afficher les x répertoires les plus lourds
+```
+find . -type d ! -name . -prune -exec du -sk {} \+ | sort -nr | tail -n 20
+```
+Ignorer avec
+```
+-prune -o -print
+```
+Array
+```
+ls | tee >( wc -l | { test=$(cat -) ; echo $test ; } ) | cat
+aa
+zz
+..
+10
+
+test=$(find . )
+echo ${test[@]}
+aa
+zz
+..
+echo ${#test[@]}
+10
+```
