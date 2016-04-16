@@ -33,12 +33,13 @@ Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 ```
 DATE=`date +%Y_%m_%d-%H_%M_%S`
 ```
-## awk
+### awk
 ```
 cat <file> | grep <?> | awk -F'=' '{ print $2}'
+echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
 ```
 
-## Read
+### Read
 ```
 read -p "Please enter the hostname " host
 echo "Regle à supprimer:"
@@ -55,7 +56,7 @@ while true; do
 done
 ```
 
-## Case
+### Case
 ```
 [ -n "$1" ] && action=$1 || usage
 
@@ -70,7 +71,7 @@ done
 
 cat /etc/passwd | awk -F":" '{print $1}'
 ```
-##Détection de l'utilisateur
+### Détection de l'utilisateur
 ```
 if [ $(whoami) = "root" ]
 then
@@ -79,34 +80,34 @@ else
 echo You cannot run this script as root..
 fi
 ```
-##Boucles
+### Boucles
 ```
 for (( i=0; i<4;i++ ))
 do
-echo $i
+	echo $i
 done
 
 for i in {1..3}; do echo \$i; done
 
 for i in `seq 1 5 20`
 do
-echo $i
+	echo $i
 done
 
 j=1
 while [ $j -le 3 ]
 do
-echo $j
-j=$(($j+1))
+	echo $j
+	j=$(($j+1))
 done
 
 while (( h++ < 3 ))
 do
-echo $h
+	echo $h
 done
 
 while read; do
-echo $REPLY
+	echo $REPLY
 done < <(find . -type f)
 
 var=$(ls / | (
@@ -114,11 +115,9 @@ while read; do echo $REPLY; done
 ))
 
 while read; do
-name=$(echo $REPLY|cut -d ":" -f1)
-echo "Nom : "$name
+	name=$(echo $REPLY|cut -d ":" -f1)
+	echo "Nom : "$name
 done < /etc/passwd
-
-echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
 
 touch test1.csv
 echo "aa;bb;cc" >> test1.csv
@@ -130,41 +129,41 @@ OLDIFS=$IFS
 IFS=";"
 while read status name path
 do
-echo "status:$status-$path"
+	echo "status:$status-$path"
 done < test1.csv
 IFS=$OLDIFS
 ```
-##Condition
+### Condition
 ```
 var=OK
 if [ "$var" = "OK" ]
 then
-echo "OK"
+	echo "OK"
 elif [ "$var" = "KO" ]
 then
-echo "KO"
+	echo "KO"
 else
-echo "..."
+	echo "..."
 fi
 
 if [ "$var" = "KO" ] || [ "$var2" = "KO" ]
-...
+then...
 
 if [ "$var" = "KO" ] && [ "$var2" = "KO" ]
-....
+then....
 
-if [ "$var3"="1" ] && [ "$var" = "KOI" ] || [ "$var3"="1" ] && [ "$var2" = "KO" ]
-if [ "$var3"="1" -a \( "$var" = "KOI" -o  "$var2" = "KO" \) ]
+if [ "$var3"="1" ] && [ "$var" = "KOI" ] || [ "$var3"="1" ] && [ "$var2" = "KO" ]; then
+if [ "$var3"="1" -a \( "$var" = "KOI" -o  "$var2" = "KO" \) ]; then
 
 if [ -z "$(rpm -qa )" ]
 then
-echo "missing"
+	echo "missing"
 fi
 
 [ "$var" = "OK" ] && echo "OK" || echo "KO"
 ```
 
-## if grep
+### if grep
 ```
 if grep -q $host /etc/hosts
 then
@@ -179,27 +178,25 @@ if [ $(grep -c string /path/to/file) -eq 0 ]...
 
 if [ $(echo "stringtest" | grep -c "test") -ne 0 ]
 then
-echo "string exists"
+	echo "string exists"
 else    
-echo "not exists"
+	echo "not exists"
 fi
 
-if [ $(grep -c "test" fileTest.txt) ] ....
+if [ $(grep -c "test" fileTest.txt) ]; then ....
 ```
  
-##Comparaison d'entiers - nombres
+### Comparaison d'entiers - nombres
 ```
 [ $a -eq $b ] 	égalité entre a et b
 [ $a -ne $b ] 	inégalité entre a et b
 [ $a -ge $b ] 	supérioté ou égalité de a sur b
 [ $a -gt $b ] 	supériorité stricte de a sur b
-
-[ $a -le $b ]
-
+[ $a -le $b ]   infériorité stricte de a sur b
+[ $a -lt $b ] 	infériorité ou égalité de a sur b
 if (("$a" <= "$b")) infériorité ou égalité de a sur b
-[ $a -lt $b ] 	infériorité stricte de a sur b
 ```
-##Comparaison de chaine de caractères
+### Comparaison de chaine de caractères
 ```
 [ -z STRING ]	STRING null (vide)
 [ -n STRING ]   STRING non null (non vide)
@@ -209,7 +206,7 @@ if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ STRING > STRING2  ] 	
 ```
  
-##Teste sur les fichiers
+### Teste sur les fichiers
 ```
 [ -d FILE ] 	FILE existe et est un répertoire.
 [ -e FILE ] 	FILE existe.
@@ -222,9 +219,9 @@ if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ -O FILE ] 	FILE existe et and appartient au user courant
 [ -G FILE ] 	FILE existe et and appartient au groupe courant
 [ -N FILE ] 	FILE existe et a été modifié depuis la dernière lecture
-[ FILE1 -nt FILE2 ] 	FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
+[ FILE1 -nt FILE2 ] FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
 ```
-##Variables
+### Variables
 ```
 VAR=`ls -a`
 VAR=$(ls -a)
@@ -232,7 +229,7 @@ VAR=$(ls -a)
 $# nombre d'args
 $? code retour dernière commande.
 ```
-##Recherche
+### Recherche
 ```
 echo "aaa uiii  zaza" | grep -w uiii
 
@@ -254,7 +251,7 @@ echo \"rereruui uiii aa\" | grep -c aa
 #PID
 pgrep -u user
 ```
-##Scripts Purge
+### Scripts Purge
 ```
 NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
 echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
@@ -270,16 +267,16 @@ else
 echo "No purge to do" | tee -a $LOG $LOG_TMP
 fi
 ```
-##Afficher les processus ayant une activité réseau
+### Afficher les processus ayant une activité réseau
 ```
 lsof -Pnl +M -i4
 ```
-##Fichier ouvert
+### Fichier ouvert
 ```
 lsof -u admin | grep | wc -l
 ```
  
-##find
+### find
 ```
 #Modifiés il y a moins de 24 heures
 find . -mtime 0
@@ -328,7 +325,7 @@ find . -type d ! -name . -prune -exec du -sk {} \+ | sort -nr | tail -n 20
 #Ignorer avec
 -prune -o -print
 ```
-##Array
+### Array
 ```
 ls | tee >( wc -l | { test=$(cat -) ; echo $test ; } ) | cat
 aa
@@ -345,7 +342,7 @@ echo ${#test[@]}
 10
 ```
 
-## tmux
+### tmux
 ```
 tmux list-sessions / tmux ls : List session
 tmux new -s sessionName : Create a new session with the name sessionName
