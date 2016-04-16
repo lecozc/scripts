@@ -285,10 +285,10 @@ fi
 
 ### lsof / fuser
 ```
-### Afficher les processus ayant une activité réseau
+# Afficher les processus ayant une activité réseau
 lsof -Pnl +M -i4
 
-### Fichier ouvert
+# Fichier ouvert
 lsof -u admin | grep | wc -l
 
 # Process qui utilisent le fichier
