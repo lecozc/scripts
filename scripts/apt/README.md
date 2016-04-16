@@ -262,6 +262,9 @@ echo \"rereruui uiii aa\" | grep -c aa
 
 #PID
 pgrep -u user
+
+# Lire fichier de config
+PROPERTY = `grep "property" config.ini | cut -d =' -f2`
 ```
 ### Scripts Purge
 ```
@@ -279,13 +282,20 @@ else
 	echo "No purge to do" | tee -a $LOG $LOG_TMP
 fi
 ```
+
+### lsof / fuser
+```
 ### Afficher les processus ayant une activité réseau
-```
 lsof -Pnl +M -i4
-```
+
 ### Fichier ouvert
-```
 lsof -u admin | grep | wc -l
+
+# Process qui utilisent le fichier
+fuser -uv <filename> 
+
+# Process qui accèdent au path
+fuser -uvm /home
 ```
  
 ### find
@@ -371,3 +381,8 @@ Ctrl+b p - move to the (p)revious window.
 Ctrl+b d - Detach session
 ```
 
+### rsync
+```
+EXCLUDE='--exclude '.DS_Store' --exclude '@eaDir' --exclude '.DS_Store@SynoResource' --exclude 'Thumbs.db' --exclude 'Thumbs.db@SynoResource''
+rsync -phavz $EXCLUDE --bwlimit=$UP_LIMIT -e "ssh -p $SSH_PORT" $ARGS "$SSH_LOGIN@$SOURCE_SERVER:'$BACKUP_SRC'" $BACKUP_DEST
+```
