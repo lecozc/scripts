@@ -21,7 +21,7 @@ echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
 
 update-manager -d
-
+ou
 do-release-upgrade -d
 
 lsb_release -d
@@ -37,36 +37,23 @@ here=$(dirname $(readlink -f $0))
 SCRIPTNAME=`basename $0`
 extension="${SCRIPTNAME##*.}"
 filename="${SCRIPTNAME%.*}"
+```
 
-trim: 
+## Trim 
+```
 Start sed -e 's/^[[:space:]]*//'
 End sed -e 's/[[:space:]]*$//'
 Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+```
 
+```
 DATE=`date +%Y_%m_%d-%H_%M_%S`
-
 cat <file> | grep <?> | awk -F'=' '{ print $2}'
+```
 
+## Read
+```
 read -p "Please enter the hostname " host
-
-if grep -q $host /etc/hosts
-then
-  sed -i "s/$oldHost/$host/g" /etc/sysconfig/network
-else 
-  echo "$host not found in /etc/hosts"
-fi
-
-[ -n "$1" ] && action=$1 || usage
-
-	case $action in
-		"install")
-                        install
-                ;;
-		*)
-		echo ""
-		;;
-	esac
-
 echo "Regle à supprimer:"
 read -p "[fail2ban-ssh 1] " rule
 rule=${rule:-"fail2ban-ssh 1"}
@@ -80,6 +67,21 @@ while true; do
     esac
 done
 ```
+
+## Case
+```
+[ -n "$1" ] && action=$1 || usage
+
+	case $action in
+		"install")
+                        install
+                ;;
+		*)
+		echo ""
+		;;
+	esac
+```
+
 Extraire IP d'un fichier
 ```
 cat <file> | grep -Eo ‘([0-9]{1,3}\.){3}[0-9]{1,3}’ | sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4 | uniq
@@ -179,12 +181,22 @@ then
 echo "missing"
 fi
 
-if [ $(grep -c string /path/to/file) -eq 0 ]...
-
 [ "$var" = "OK" ] && echo "OK" || echo "KO"
 ```
-Tester si une chaine/sous-chaine est présente dans un fichier ou dans une chaine.
+
+## if grep
 ```
+if grep -q $host /etc/hosts
+then
+  sed -i "s/$oldHost/$host/g" /etc/sysconfig/network
+else 
+  echo "$host not found in /etc/hosts"
+fi
+
+if [ $(grep -c string /path/to/file) -eq 0 ]...
+
+#Tester si une chaine/sous-chaine est présente dans un fichier ou dans une chaine.
+
 if [ $(echo "stringtest" | grep -c "test") -ne 0 ]
 then
 echo "string exists"
@@ -204,15 +216,13 @@ Comparaison d'entiers - nombres
 
 [ $a -le $b ]
 
-if (("$a" <= "$b"))
-	infériorité ou égalité de a sur b
+if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ $a -lt $b ] 	infériorité stricte de a sur b
+```
 Comparaison de chaine de caractères
-[ -z STRING ]
-	STRING null (vide)
-[ -n STRING ] 	
-
-STRING non null (non vide)
+```
+[ -z STRING ]	STRING null (vide)
+[ -n STRING ]   STRING non null (non vide)
 [ STRING == STRING2 ] 	
 [ STRING != STRING2 ] 	
 [ STRING < STRING2 ] 	
@@ -224,11 +234,7 @@ Teste sur les fichiers
 [ -d FILE ] 	FILE existe et est un répertoire.
 [ -e FILE ] 	FILE existe.
 [ -f FILE ] 	FILE existe et est un fichier classique (-rw-rw-rw- 1er tiret) "regular file"
-
-[ -h FILE ]
-
-[ -L FILE ]
-	FILE existe et est un lien symbolique
+[ -L or -h FILE ] FILE existe et est un lien symbolique
 [ -r FILE ] 	FILE existe et est en lecture
 [ -s FILE ] 	FILE existe et sa taille est supérieure à zéro
 [ -w FILE ] 	FILE existe et est en écriture
@@ -241,14 +247,9 @@ Teste sur les fichiers
 Variables
 ```
 VAR=`ls -a`
-
 VAR=$(ls -a)
 
--z string is null, that is, has zero length
-
--n string is not null.
 $# nombre d'args
-
 $? code retour dernière commande.
 
 SCRIPTNAME=`basename $0`
@@ -256,30 +257,24 @@ extension="${SCRIPTNAME##*.}"
 filename="${SCRIPTNAME%.*}"
 
 here=$(dirname $(readlink -f $0))
-grep
 ```
 Recherche
 ```
 echo "aaa uiii  zaza" | grep -w uiii
 
-Exclusion
-
+#Exclusion
 echo "aaa uiii" | grep -v aa | grep ui
 
-Recherche multiple
-
+#Recherche multiple
 grep -w 'warning\|error\|critical' test.txt
 
-Recherche expression régulière
-
+#Recherche expression régulière
 echo "rereruui uiii aa" | grep -E "^re"
 
-Compte
-
+#Compte
 echo \"rereruui uiii aa\" | grep -c aa
 
-PID
-
+#PID
 pgrep -u user
 ```
 Scripts Purge
@@ -309,67 +304,51 @@ lsof -u admin | grep | wc -l
  
 find
 ```
-Modifiés il y a moins de 24 heures
-
+#Modifiés il y a moins de 24 heures
 find . -mtime 0
 
-Modifiés il y a plus de 24 heures
-
+#Modifiés il y a plus de 24 heures
 find . -mtime +0
 
-Modifiés il y a moins de 10 minutes
-
+#Modifiés il y a moins de 10 minutes
 find . -mmin -10
 
-Modifiés entre 24 heures et 48 heures
-
+#Modifiés entre 24 heures et 48 heures
 find . -mtime 1
 
-Modifiés il y a plus de 48 heures
-
+#Modifiés il y a plus de 48 heures
 find . -mtime +1
 
-Modifiés entre 1 et 2 minutes
-
+#Modifiés entre 1 et 2 minutes
 find . -mmin +0 -mmin -2
 
-Permission données
-
+#Permission données
 find . -type f -perm -o=w
 
-grep -ir
-
+#grep -ir
 find . -type f -print0 | xargs -0 -e grep -niH -e 'string'
 
-Supprimer les fichiers cachés
-
+#Supprimer les fichiers cachés
 find -type f -name '.*' -exec rm {} \;
 
-Supprimer les répertoires vides
-
+#Supprimer les répertoires vides
 find . -type d -empty -print -exec rmdir -f {} \;
 
-Rechercher selon plusieurs motifs
-
+#Rechercher selon plusieurs motifs
 find -type f \( -name "*.Ext1" -o -name "*.Ext2" \)
 
-Remplacer une chaine dans plusieurs fichiers
-
+#Remplacer une chaine dans plusieurs fichiers
 find ./ -type f -exec sed -i 's/OLD/NEW/' {} \;
 
-Boucler sur des fichiers/répertoires
-
+#Boucler sur des fichiers/répertoires
 find . -type d ! -name . -print | while read dir; do
 ...
 done
-```
 
-Afficher les x répertoires les plus lourds
-```
+#Afficher les x répertoires les plus lourds
 find . -type d ! -name . -prune -exec du -sk {} \+ | sort -nr | tail -n 20
-```
-Ignorer avec
-```
+
+#Ignorer avec
 -prune -o -print
 ```
 Array
