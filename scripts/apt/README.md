@@ -50,6 +50,11 @@ date +"%s:%c"
 cat <file> | grep <?> | awk -F'=' '{ print $2}'
 echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
 ```
+### sed
+```
+sed -i "s/$OLD_IP/$DOCKER_IP/g" <file>
+out=`echo $1 | sed -e "s|-raw.\(.*\)$|.\1|"`
+```
 
 ### Read
 ```
@@ -80,8 +85,6 @@ done
 		echo ""
 		;;
 	esac
-
-cat /etc/passwd | awk -F":" '{print $1}'
 ```
 ### Détection de l'utilisateur
 ```
