@@ -80,17 +80,10 @@ done
 		echo ""
 		;;
 	esac
-```
 
-Extraire IP d'un fichier
-```
-cat <file> | grep -Eo ‘([0-9]{1,3}\.){3}[0-9]{1,3}’ | sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4 | uniq
-```
-
-```
 cat /etc/passwd | awk -F":" '{print $1}'
 ```
-Détection de l'utilisateur
+##Détection de l'utilisateur
 ```
 if [ $(whoami) = "root" ]
 then
@@ -99,7 +92,7 @@ else
 echo You cannot run this script as root..
 fi
 ```
-Boucles
+##Boucles
 ```
 for (( i=0; i<4;i++ ))
 do
@@ -154,7 +147,7 @@ echo "status:$status-$path"
 done < test1.csv
 IFS=$OLDIFS
 ```
-Condition
+##Condition
 ```
 var=OK
 if [ "$var" = "OK" ]
@@ -207,7 +200,7 @@ fi
 if [ $(grep -c "test" fileTest.txt) ] ....
 ```
  
-Comparaison d'entiers - nombres
+##Comparaison d'entiers - nombres
 ```
 [ $a -eq $b ] 	égalité entre a et b
 [ $a -ne $b ] 	inégalité entre a et b
@@ -219,7 +212,7 @@ Comparaison d'entiers - nombres
 if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ $a -lt $b ] 	infériorité stricte de a sur b
 ```
-Comparaison de chaine de caractères
+##Comparaison de chaine de caractères
 ```
 [ -z STRING ]	STRING null (vide)
 [ -n STRING ]   STRING non null (non vide)
@@ -229,7 +222,7 @@ Comparaison de chaine de caractères
 [ STRING > STRING2  ] 	
 ```
  
-Teste sur les fichiers
+##Teste sur les fichiers
 ```
 [ -d FILE ] 	FILE existe et est un répertoire.
 [ -e FILE ] 	FILE existe.
@@ -244,21 +237,15 @@ Teste sur les fichiers
 [ -N FILE ] 	FILE existe et a été modifié depuis la dernière lecture
 [ FILE1 -nt FILE2 ] 	FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
 ```
-Variables
+##Variables
 ```
 VAR=`ls -a`
 VAR=$(ls -a)
 
 $# nombre d'args
 $? code retour dernière commande.
-
-SCRIPTNAME=`basename $0`
-extension="${SCRIPTNAME##*.}"
-filename="${SCRIPTNAME%.*}"
-
-here=$(dirname $(readlink -f $0))
 ```
-Recherche
+##Recherche
 ```
 echo "aaa uiii  zaza" | grep -w uiii
 
@@ -271,13 +258,16 @@ grep -w 'warning\|error\|critical' test.txt
 #Recherche expression régulière
 echo "rereruui uiii aa" | grep -E "^re"
 
+#Extraire IP d'un fichier
+cat <file> | grep -Eo ‘([0-9]{1,3}\.){3}[0-9]{1,3}’ | sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4 | uniq
+
 #Compte
 echo \"rereruui uiii aa\" | grep -c aa
 
 #PID
 pgrep -u user
 ```
-Scripts Purge
+##Scripts Purge
 ```
 NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
 echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
@@ -293,16 +283,16 @@ else
 echo "No purge to do" | tee -a $LOG $LOG_TMP
 fi
 ```
-Afficher les processus ayant une activité réseau
+##Afficher les processus ayant une activité réseau
 ```
 lsof -Pnl +M -i4
 ```
-Fichier ouvert
+##Fichier ouvert
 ```
 lsof -u admin | grep | wc -l
 ```
  
-find
+##find
 ```
 #Modifiés il y a moins de 24 heures
 find . -mtime 0
@@ -351,7 +341,7 @@ find . -type d ! -name . -prune -exec du -sk {} \+ | sort -nr | tail -n 20
 #Ignorer avec
 -prune -o -print
 ```
-Array
+##Array
 ```
 ls | tee >( wc -l | { test=$(cat -) ; echo $test ; } ) | cat
 aa
