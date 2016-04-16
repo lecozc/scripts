@@ -1,5 +1,5 @@
 # tmux
-
+```
 tmux list-sessions / tmux ls : List session
 tmux new -s sessionName : Create a new session with the name sessionName
 tmux attach -t 0 : Attach the 0 session
@@ -13,8 +13,10 @@ Ctrl+b n - move to the (n)ext window.
 Ctrl+b p - move to the (p)revious window.
 
 Ctrl+b d - Detach session
+```
 
 # Ubuntu
+```
 echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
 
@@ -27,7 +29,10 @@ lsb_release -d
 /etc/sudoers
 <user> ALL=(ALL) NOPASSWD: ALL
 -----------------------------------------------
+```
 
+# Shell
+```
 here=$(dirname $(readlink -f $0))
 SCRIPTNAME=`basename $0`
 extension="${SCRIPTNAME##*.}"
@@ -74,3 +79,4 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+```
