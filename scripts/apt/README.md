@@ -32,6 +32,18 @@ Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
 ### Date
 ```
 DATE=`date +%Y_%m_%d-%H_%M_%S`
+echo `date +"%Y-%m-%d %T"`
+=> 2016-04-16 22:44:06
+
+currentDate=`date +%Y-%m-%d`
+yesterdayDate=`date --date='1 days ago' +%Y%m%d`
+if [[ "$ligne" == *\$currentDate* ]]; then
+	...
+elif [[ "$ligne" == *\$yesterdayDate* ]]; then
+	...
+	
+date +"%s:%c"
+1460839812:sam. 16 avril 2016 22:50:12 CEST	
 ```
 ### awk
 ```
@@ -75,9 +87,9 @@ cat /etc/passwd | awk -F":" '{print $1}'
 ```
 if [ $(whoami) = "root" ]
 then
-echo You cannot run this script as root..
+	echo You cannot run this script as root..
 else
-echo You cannot run this script as root..
+	echo You cannot run this script as root..
 fi
 ```
 ### Boucles
@@ -257,14 +269,14 @@ NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
 echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
 
 if [ $NB_EXPORT -gt ${NB_EXPORT_TO_KEEP} ] ; then
-echo "Purge old export" | tee -a $LOG $LOG_TMP
-NB_EXPORT_RM=`expr $NB_EXPORT - $NB_EXPORT_TO_KEEP`
-echo "nb file to delete :"$NB_EXPORT_RM | tee -a $LOG $LOG_TMP
-FILE_TO_DELETE=`ls -lrta ${path}/*.tar.gz 2>/dev/null | sed -n "1,${NB_EXPORT_RM}p" | awk '{print $NF}'`
-echo "file to delete :"$FILE_TO_DELETE | tee -a $LOG $LOG_TMP
-rm -f $FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+	echo "Purge old export" | tee -a $LOG $LOG_TMP
+	NB_EXPORT_RM=`expr $NB_EXPORT - $NB_EXPORT_TO_KEEP`
+	echo "nb file to delete :"$NB_EXPORT_RM | tee -a $LOG $LOG_TMP
+	FILE_TO_DELETE=`ls -lrta ${path}/*.tar.gz 2>/dev/null | sed -n "1,${NB_EXPORT_RM}p" | awk '{print $NF}'`
+	echo "file to delete :"$FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+	rm -f $FILE_TO_DELETE | tee -a $LOG $LOG_TMP
 else
-echo "No purge to do" | tee -a $LOG $LOG_TMP
+	echo "No purge to do" | tee -a $LOG $LOG_TMP
 fi
 ```
 ### Afficher les processus ayant une activité réseau
@@ -358,3 +370,4 @@ Ctrl+b p - move to the (p)revious window.
 
 Ctrl+b d - Detach session
 ```
+
