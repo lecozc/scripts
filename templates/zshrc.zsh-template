@@ -111,3 +111,5 @@ bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 
 alias ll='ls -lrtha'
+alias cdl='cd /var/log/;ls -lrtha'
+alias apt-upg='apt-get update  && apt-get upgrade -y && apt-get dist-upgrade -y'
