@@ -21,6 +21,7 @@ lsb_release -d
 /etc/sudoers
 <user> ALL=(ALL) NOPASSWD: ALL
 -----------------------------------------------
+update-rc.d <init script> defaults
 ```
 
 # Shell
