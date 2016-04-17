@@ -430,18 +430,18 @@ fi
 # Default-Stop: 0 1 6
 # Short-Description: Start NAME
 ### END INIT INFO
-NAME="Name"
+NAME="<daemonName>"
 PATH_BIN=/bin:/usr/bin:/sbin:/usr/sbin
-DAEMON="/usr/bin/<daemon>"
+DAEMON="/usr/bin/<daemonCmd>"
 DESC="Description"
 RET=0
 
 status(){
     pid=`pidof $NAME`
     if [ -z "$pid" ]; then
-	RET=1
+        RET=1
     else
-	RET=0
+        RET=0
     fi
     return $RET
 }
