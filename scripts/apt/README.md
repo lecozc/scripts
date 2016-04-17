@@ -36,6 +36,7 @@ filename="${SCRIPTNAME%.*}"
 Start sed -e 's/^[[:space:]]*//'
 End sed -e 's/[[:space:]]*$//'
 Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+| sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
 ```
 
 ### Date
@@ -63,6 +64,7 @@ echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
 ```
 sed -i "s/$OLD_IP/$DOCKER_IP/g" <file>
 out=`echo $1 | sed -e "s|-raw.\(.*\)$|.\1|"`
+| sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
 ```
 
 ### Read
@@ -82,7 +84,16 @@ while true; do
 done
 ```
 
-### Case
+### cat
+```
+cat <<EOF >fichier
+bla bla
+...
+bla bla
+EOF
+```
+
+### case
 ```
 [ -n "$1" ] && action=$1 || usage
 
@@ -209,7 +220,13 @@ fi
 
 if [ $(grep -c "test" fileTest.txt) ]; then ....
 ```
- 
+
+### Calcul
+```
+i=$(($i+1))
+
+```
+
 ### Comparaison d'entiers - nombres
 ```
 [ $a -eq $b ] 	égalité entre a et b
@@ -227,22 +244,22 @@ if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ STRING == STRING2 ] 	
 [ STRING != STRING2 ] 	
 [ STRING < STRING2 ] 	
-[ STRING > STRING2  ] 	
+[ STRING > STRING2 ]
 ```
  
 ### Teste sur les fichiers
 ```
-[ -d FILE ] 	FILE existe et est un répertoire.
-[ -e FILE ] 	FILE existe.
-[ -f FILE ] 	FILE existe et est un fichier classique (-rw-rw-rw- 1er tiret) "regular file"
-[ -L or -h FILE ] FILE existe et est un lien symbolique
-[ -r FILE ] 	FILE existe et est en lecture
-[ -s FILE ] 	FILE existe et sa taille est supérieure à zéro
-[ -w FILE ] 	FILE existe et est en écriture
-[ -x FILE ] 	FILE existe et est exécutable
-[ -O FILE ] 	FILE existe et and appartient au user courant
-[ -G FILE ] 	FILE existe et and appartient au groupe courant
-[ -N FILE ] 	FILE existe et a été modifié depuis la dernière lecture
+[ -d FILE ] 	 FILE existe et est un répertoire.
+[ -e FILE ] 	 FILE existe.
+[ -f FILE ] 	 FILE existe et est un fichier classique (-rw-rw-rw- 1er tiret) "regular file"
+[ -L or -h FILE ]FILE existe et est un lien symbolique
+[ -r FILE ] 	 FILE existe et est en lecture
+[ -s FILE ] 	 FILE existe et sa taille est supérieure à zéro
+[ -w FILE ] 	 FILE existe et est en écriture
+[ -x FILE ] 	 FILE existe et est exécutable
+[ -O FILE ] 	 FILE existe et and appartient au user courant
+[ -G FILE ] 	 FILE existe et and appartient au groupe courant
+[ -N FILE ]	 FILE existe et a été modifié depuis la dernière lecture
 [ FILE1 -nt FILE2 ] FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
 ```
 ### Variables
@@ -253,7 +270,7 @@ VAR=$(ls -a)
 $# nombre d'args
 $? code retour dernière commande.
 ```
-### Recherche
+### grep
 ```
 echo "aaa uiii  zaza" | grep -w uiii
 
@@ -276,7 +293,7 @@ echo \"rereruui uiii aa\" | grep -c aa
 pgrep -u user
 
 # Lire fichier de config
-PROPERTY = `grep "property" config.ini | cut -d =' -f2`
+PROPERTY = `grep "property" config.ini | cut -d =' -f2 | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'`
 ```
 ### Scripts Purge
 ```
