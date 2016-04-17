@@ -36,7 +36,7 @@ filename="${SCRIPTNAME%.*}"
 Start sed -e 's/^[[:space:]]*//'
 End sed -e 's/[[:space:]]*$//'
 Both sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
-| sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
+... | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
 ```
 
 ### Date
@@ -64,7 +64,7 @@ echo awk -F ":" '{print "Nom : "$1}' /etc/passwd
 ```
 sed -i "s/$OLD_IP/$DOCKER_IP/g" <file>
 out=`echo $1 | sed -e "s|-raw.\(.*\)$|.\1|"`
-| sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
+... | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'
 ```
 
 ### Read
@@ -224,7 +224,6 @@ if [ $(grep -c "test" fileTest.txt) ]; then ....
 ### Calcul
 ```
 i=$(($i+1))
-
 ```
 
 ### Comparaison d'entiers - nombres
@@ -294,22 +293,6 @@ pgrep -u user
 
 # Lire fichier de config
 PROPERTY = `grep "property" config.ini | cut -d =' -f2 | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/\"//g'`
-```
-### Scripts Purge
-```
-NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
-echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
-
-if [ $NB_EXPORT -gt ${NB_EXPORT_TO_KEEP} ] ; then
-	echo "Purge old export" | tee -a $LOG $LOG_TMP
-	NB_EXPORT_RM=`expr $NB_EXPORT - $NB_EXPORT_TO_KEEP`
-	echo "nb file to delete :"$NB_EXPORT_RM | tee -a $LOG $LOG_TMP
-	FILE_TO_DELETE=`ls -lrta ${path}/*.tar.gz 2>/dev/null | sed -n "1,${NB_EXPORT_RM}p" | awk '{print $NF}'`
-	echo "file to delete :"$FILE_TO_DELETE | tee -a $LOG $LOG_TMP
-	rm -f $FILE_TO_DELETE | tee -a $LOG $LOG_TMP
-else
-	echo "No purge to do" | tee -a $LOG $LOG_TMP
-fi
 ```
 
 ### lsof / fuser
@@ -414,4 +397,100 @@ Ctrl+b d - Detach session
 ```
 EXCLUDE='--exclude '.DS_Store' --exclude '@eaDir' --exclude '.DS_Store@SynoResource' --exclude 'Thumbs.db' --exclude 'Thumbs.db@SynoResource''
 rsync -phavz $EXCLUDE --bwlimit=$UP_LIMIT -e "ssh -p $SSH_PORT" $ARGS "$SSH_LOGIN@$SOURCE_SERVER:'$BACKUP_SRC'" $BACKUP_DEST
+```
+
+### Scripts Purge
+```
+NB_EXPORT=`ls -l ${path}/*.tar.gz 2>/dev/null | wc -l`
+echo "nb export :"$NB_EXPORT "/" $NB_EXPORT_TO_KEEP | tee -a $LOG
+
+if [ $NB_EXPORT -gt ${NB_EXPORT_TO_KEEP} ] ; then
+	echo "Purge old export" | tee -a $LOG $LOG_TMP
+	NB_EXPORT_RM=`expr $NB_EXPORT - $NB_EXPORT_TO_KEEP`
+	echo "nb file to delete :"$NB_EXPORT_RM | tee -a $LOG $LOG_TMP
+	FILE_TO_DELETE=`ls -lrta ${path}/*.tar.gz 2>/dev/null | sed -n "1,${NB_EXPORT_RM}p" | awk '{print $NF}'`
+	echo "file to delete :"$FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+	rm -f $FILE_TO_DELETE | tee -a $LOG $LOG_TMP
+else
+	echo "No purge to do" | tee -a $LOG $LOG_TMP
+fi
+```
+
+### init script
+```
+#!/bin/sh
+#
+# /etc/init.d/INIT: Start the NAME
+#
+### BEGIN INIT INFO
+# Provides:	  NAME
+# Required-Start: $local_fs $syslog $remote_fs
+# Required-Stop: $remote_fs
+# Default-Start:  2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start NAME
+### END INIT INFO
+NAME="Name"
+PATH_BIN=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON="/usr/bin/<daemon>"
+DESC="Description"
+RET=0
+
+status(){
+    pid=`pidof $NAME`
+    if [ -z "$pid" ]; then
+	RET=1
+    else
+	RET=0
+    fi
+    return $RET
+}
+
+case "$1" in
+  start)
+	status
+	if [ "$?" = "0" ]; then
+		echo "Already running"
+		exit 1
+	fi
+	echo  "Starting $DESC" "$NAME" 
+	$DAEMON 
+	if [ $? = 0 ] ; then
+            RET=0
+        else
+            RET=1
+        fi
+    ;;
+
+  stop)
+    echo "Stopping $DESC" "$NAME"
+        status
+        if [ "$?" = "1" ]; then
+                echo "Already stopped"
+                exit 1
+        fi
+   
+    kill -9 `pgrep $NAME`
+    ;;
+
+  restart)
+    stop
+    sleep 2;
+    start    
+    ;;
+
+  status)
+        status
+        if [ "$?" = "0" ]; then
+                echo "$NAME running"
+	else
+		echo "$NAME not running"
+        fi
+    ;;
+  *)
+    echo "Usage: /etc/init.d/$NAME {start|stop|restart|status}"
+    RET=1
+    ;;
+esac
+exit $RET
 ```
