@@ -14,7 +14,7 @@ apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
 
-apt-get gcc make git autoconf autogen automake vim mlocate net-tools tcpdump zsh
+apt-get gcc make git autoconf autogen automake vim mlocate net-tools tcpdump zsh tmux
 
 sh -c "$(wget https://raw.githubusercontent.com/T0FFF/oh-my-zsh/master/tools/install.sh -O -)"
 echo "source /home/$USER/.zshrc" > /root/.zshrc
