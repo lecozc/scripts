@@ -495,3 +495,37 @@ case "$1" in
 esac
 exit $RET
 ```
+
+### systemd
+```
+/usr/lib/systemd/system/
+systemctl enable nom_du_service.service
+systemctl disable nom_du_service.service
+systemctl is-active nom_du_service.service
+systemctl status nom_du_service.service
+systemctl list-units --type=service 
+systemctl start nom_du_service.service
+systemctl stop nom_du_service.service
+systemctl restart nom_du_service.service
+systemctl reload nom_du_service.service
+systemctl get-default : connaitre son niveau d'exécution
+systemctl isolate nom.target
+systemctl set-default nom.target
+
+[Unit]
+Description=Je dis ici à quoi sert le service
+ConditionPathExists=/usr/sbin/commande
+[Service]
+Type=forking
+ExecStart=/bin/sh -c 'commande'
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+[Install]
+WantedBy=multi-user.target
+
+chmod a+x /etc/systemd/system/mon-service.service
+systemctl --system daemon-reload
+
+```
