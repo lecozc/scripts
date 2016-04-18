@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 usage(){
 	echo "Usage: `basename $0` <message> <name> <email>"	
 	exit 1
