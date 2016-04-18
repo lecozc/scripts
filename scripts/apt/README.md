@@ -21,7 +21,6 @@ lsb_release -d
 /etc/sudoers
 <user> ALL=(ALL) NOPASSWD: ALL
 -----------------------------------------------
-update-rc.d <init script> defaults
 ```
 
 # Shell
@@ -433,7 +432,7 @@ fi
 ### END INIT INFO
 NAME="<daemonName>"
 PATH_BIN=/bin:/usr/bin:/sbin:/usr/sbin
-DAEMON="/usr/bin/<daemonCmd>"
+DAEMON="/usr/bin/$NAME <options>"
 DESC="Description"
 RET=0
 
@@ -494,6 +493,8 @@ case "$1" in
     ;;
 esac
 exit $RET
+---------------------
+update-rc.d <init script> defaults
 ```
 
 ### systemd
