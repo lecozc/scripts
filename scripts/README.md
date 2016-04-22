@@ -8,6 +8,8 @@ sh -c "$(wget https://raw.githubusercontent.com/T0FFF/oh-my-zsh/master/tools/ins
 echo "source /home/$USER/.zshrc" > /root/.zshrc
 
 apt-get install openswan=1:2.6.37-3
+or
+apt-mark hold openswan
 
 echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
