@@ -25,6 +25,20 @@ lsb_release -d
 -----------------------------------------------
 ```
 
+# Docker
+```
+curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+-----------------------------------------------------------------------------
+Docker iptables 
+http://blog.oddbit.com/2014/08/11/four-ways-to-connect-a-docker/
+
+docker inspect --format '{{ .State.Pid }}' mailserver
+15266
+
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' mailserver
+172.17.0.44
+```
+
 # Shell
 ```
 here=$(dirname $(readlink -f $0))
