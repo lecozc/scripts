@@ -10,6 +10,12 @@ echo "source /home/$USER/.zshrc" > /root/.zshrc
 apt-get install openswan=1:2.6.37-3
 or
 apt-mark hold openswan
+=> openswan passé en figé (« hold »).
+dpkg -l | grep openswan
+=> hi  openswan                                  1:2.6.37-3
+au lieu de "ii  openswan                                  1:2.6.37-3"
+apt-mark unhold openswan
+=> Annulation de l'état figé pour openswan.
 
 echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
