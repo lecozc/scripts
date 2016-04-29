@@ -280,7 +280,7 @@ if (("$a" <= "$b")) infériorité ou égalité de a sur b
 [ -x FILE ] 	 FILE existe et est exécutable
 [ -O FILE ] 	 FILE existe et and appartient au user courant
 [ -G FILE ] 	 FILE existe et and appartient au groupe courant
-[ -N FILE ]	 FILE existe et a été modifié depuis la dernière lecture
+[ -N FILE ]      FILE existe et a été modifié depuis la dernière lecture
 [ FILE1 -nt FILE2 ] FILE1 a été modifié plus récemment que FILE2, ou si FILE1 existe et FILE2 non
 ```
 ### Variables
