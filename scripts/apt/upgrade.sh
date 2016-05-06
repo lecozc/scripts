@@ -7,7 +7,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 update(){
-	echo"##############"
+	echo "##############"
 	echo "update..."
  	apt-get update
 	apt-get upgrade -y
@@ -15,7 +15,7 @@ update(){
 }
 
 clean(){
-	echo"##############"
+	echo "##############"
 	echo "clean..."
 	apt-get clean -y &&  apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}
 
