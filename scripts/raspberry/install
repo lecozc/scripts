@@ -1,4 +1,7 @@
+apt-get autoremove --purge wolfram-engine minecraft-pi sonic-pi libreoffice
+apt-get clean
 
+-----------------------------------------------------
 samba
 
 apt-get install samba
