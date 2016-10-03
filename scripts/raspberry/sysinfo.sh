@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# put this script in /etc/zsh/zlogin
+
 let upSeconds="$(/usr/bin/cut -d. -f1 /proc/uptime)"
 let secs=$((${upSeconds}%60))
 let mins=$((${upSeconds}/60%60))
