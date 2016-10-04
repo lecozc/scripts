@@ -3,7 +3,7 @@
 # /etc/init.d/mjpg_streamer: Start the mjpg_streamer
 #
 ### BEGIN INIT INFO
-# Provides:	  motion
+# Provides:       motion
 # Required-Start: $local_fs $syslog $remote_fs
 # Required-Stop: $remote_fs
 # Default-Start:  2 3 4 5
@@ -17,7 +17,13 @@ PATH_BIN=/bin:/usr/bin:/sbin:/usr/sbin
 DAEMON=/usr/bin/mjpg_streamer
 PORT=8090
 RES=1280x720
-FRAM=20
+RESX=1280
+RESY=720
+FRAME=20
+QUALITY=100
+BACKGROUND="-b"
+
+export LD_LIBRARY_PATH=/home/ToFF/source/mjpg-streamer/mjpg-streamer-experimental
 
 DESC="daemon"
 
@@ -26,23 +32,25 @@ RET=0
 status(){
     pid=`pidof $NAME`
     if [ -z "$pid" ]; then
-	RET=1
+        RET=1
     else
-	RET=0
+        RET=0
     fi
     return $RET
 }
 
 case "$1" in
   start)
-	status
-	if [ "$?" = "0" ]; then
-		echo "Already running"
-		exit 1
-	fi
-	echo  "Starting $DESC" "$NAME" 
-	/usr/bin/mjpg_streamer -b -i "/usr/lib/input_uvc.so -d /dev/video0 -r $RES -f $FRAM -n -y" -o "/usr/lib/output_http.so -p $PORT -w /var/www/mjpg_streamer" 
-	if [ $? = 0 ] ; then
+        status
+        if [ "$?" = "0" ]; then
+                echo "Already running"
+                exit 1
+        fi
+        echo  "Starting $DESC" "$NAME"
+        #/usr/bin/mjpg_streamer -b -i "/usr/lib/input_uvc.so -d /dev/video0 -r $RES -f $FRAME -n -y" -o "/usr/lib/output_http.so -p $PORT -w /var/www/mjpg_streamer"
+        /usr/bin/mjpg_streamer $BACKGROUND -i "input_raspicam.so -r $RES -fps $FRAME -x $RESX -y $RESY -quality $QUALITY" -o "output_http.so -p $PORT -w $LD_LIBRARY_PATH/www"
+        status
+        if [ $? = 0 ] ; then
             RET=0
         else
             RET=1
@@ -56,24 +64,24 @@ case "$1" in
                 echo "Already stopped"
                 exit 1
         fi
-   
+
     kill -9 `pgrep $NAME`
     ;;
 
   restart)
     stop
     sleep 5;
-    start    
+    start
     ;;
 
   status)
         status
         if [ "$?" = "0" ]; then
                 echo "$NAME running"
-	else
-		echo "$NAME not running"
+        else
+                echo "$NAME not running"
         fi
-    
+
     ;;
 
   *)
@@ -84,3 +92,4 @@ esac
 
 
 exit $RET
+
