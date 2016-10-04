@@ -66,7 +66,7 @@ update-alternatives --config x-session-manager
 choose /usr/bin/Xfce4-session
 
 
-Wifi wlan0: 74:da:38:28:8e:db 
+Wifi wlan0: xx:xx:xx:xx:xx:xx 
 
 
 /etc/network/interfaces
@@ -140,26 +140,21 @@ mjpg-streamer
 http://blog.miguelgrinberg.com/post/how-to-build-and-run-mjpg-streamer-on-the-raspberry-pi
 http://arduinostuff.blogspot.fr/2013/04/raspberry-pi-webcam-streaming.html
 
+[EDIT 04/10/16] https://github.com/jacksonliam/mjpg-streamer
+* Install
+sudo apt-get install cmake libjpeg8-dev imagemagick
 
+* Simple compilation
+cd mjpg-streamer-experimental
+make
+sudo make install
 
-apt-get update && apt-get install libv4l-dev libjpeg8-dev subversion imagemagick uvcdynctrl
-
-#svn co https://mjpg-streamer.svn.sourceforge.net/svnroot/mjpg-streamer mjpg-streamer
-
-svn checkout http://svn.code.sf.net/p/mjpg-streamer/code/mjpg-streamer/ mjpg-streamer-code
-mjpg-streamer/mjpg-streamer
-make USE_LIBV4L2=true clean all
-make DESTDIR=/usr install
-
-
-Use this, if you did see mjpg listed in the supported formats:
-$ mjpg_streamer -i "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30 -n" -o "/usr/lib/output_http.so -p 8090 -w /var/www/mjpg_streamer"
-else, add -y flag to the input string:
-$ mjpg_streamer -i "/usr/lib/input_uvc.so -d /dev/video0 -r 1280x720 -f 30 -n -y" -o "/usr/lib/output_http.so -p 8090 -w /var/www/mjpg_streamer"
-
-[-b | background]...: fork to the background, daemon mode
-
-EDIT: http://www.developpement-applications-android.com/raspberry-pi-android-flux-video/
+* Usage
+From the mjpeg streamer experimental folder:
+export LD_LIBRARY_PATH=.
+./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so"
+or
+/usr/bin/mjpg_streamer $BACKGROUND -i "input_raspicam.so -r $RES -fps $FRAME -x $RESX -y $RESY -quality $QUALITY" -o "output_http.so -p $PORT -w $LD_LIBRARY_PATH/www"
 
 crtmpserver
 http://stephane.lavirotte.com/perso/rov/video_streaming.html
