@@ -29,6 +29,13 @@ lsb_release -d
 /etc/sudoers
 <user> ALL=(ALL) NOPASSWD: ALL
 -----------------------------------------------
+
+Disable lock screen
+xset -dpms
+xset s off
+setterm -powersave off  (ctrm + Alt + 1-6 to switch to cmd to text interface)
+
+
 ```
 
 # Docker
