@@ -35,6 +35,10 @@ xset -dpms
 xset s off
 setterm -powersave off  (ctrm + Alt + 1-6 to switch to cmd to text interface)
 
+gnome-shell
+vim /usr/share/themes/Adwaita/metacity-1/metacity-theme-3.xml
+title_vertical_pad => 0
+gnome-tweak-tool > polices / fonts
 
 ```
 
