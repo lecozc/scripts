@@ -40,6 +40,9 @@ vim /usr/share/themes/Adwaita/metacity-1/metacity-theme-3.xml
 title_vertical_pad => 0
 gnome-tweak-tool > polices / fonts
 
+Install source
+apt-get install build-essential dpkg-dev linux-headers-$(uname -r)
+
 ```
 
 # Docker
