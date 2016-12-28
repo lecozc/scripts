@@ -43,6 +43,14 @@ gnome-tweak-tool > polices / fonts
 Install source
 apt-get install build-essential dpkg-dev linux-headers-$(uname -r)
 
+if [ $(whoami) = "root" ]
+then
+  export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin"
+else
+  export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+fi
+
+
 ```
 
 # Docker
