@@ -178,5 +178,13 @@ Pour lancer RetroPie: emulationstation
 Pour configurer un manette :retroarch-joyconfig>> /.retroarch.cfg
 
 Pour tout autre modification il suffit de modifier le fichier retroarch.cfg, un Wiki à etait creer et il est trés bien fait https://github.com/petrockblog/RetroPie-Setup/wiki
+-------------------------------------------------------------------------------------------
+kodi
+
+raspberrypi root:/home/pi # cat /etc/apt/sources.list.d/pipplware_jessie.list
+deb http://pipplware.pplware.pt/pipplware/dists/jessie/main/binary /
+
+raspberrypi pi:/usr/share/kodi/userdata $ cp advancedsettings.xml /home/pi/.kodi/userdata/
+
 
 
