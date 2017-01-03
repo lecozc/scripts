@@ -167,17 +167,31 @@ apt-get upgrade -y
 apt-get dist-upgrade
 apt-get install -y git dialog
 
-git clone --depth=0 git://github.com/petrockblog/RetroPie-Setup.git
-
+??? git clone git://github.com/petrockblog/RetroPie-Setup.git
+git clone https://github.com/RetroPie/RetroPie-Setup.git
 cd RetroPie-Setup
+git checkout 3.3   (last 4.1)
 chmod +x retropie_setup.sh
-sudo ./retropie_setup.sh
+./retropie_setup.sh
+
+desactiver autorun:
+raspberrypi pi:~ $ cat /etc/profile.d/10-retropie.sh
+# launch our autostart apps (if we are on the correct tty)
+if [ "`tty`" = "/dev/tty1" ]; then
+    #bash "/opt/retropie/configs/all/autostart.sh"
+    echo "Retropie autostart disabled (profile.d/10-...)"
+fi
 
 Pour lancer RetroPie: emulationstation
 
+/opt/share/retropie
 Pour configurer un manette :retroarch-joyconfig>> /.retroarch.cfg
 
 Pour tout autre modification il suffit de modifier le fichier retroarch.cfg, un Wiki à etait creer et il est trés bien fait https://github.com/petrockblog/RetroPie-Setup/wiki
+
+Si la distrib ne se lance plus en mode graphique: raspi-config
+
+
 -------------------------------------------------------------------------------------------
 kodi
 
