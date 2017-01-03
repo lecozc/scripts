@@ -186,5 +186,49 @@ deb http://pipplware.pplware.pt/pipplware/dists/jessie/main/binary /
 
 raspberrypi pi:/usr/share/kodi/userdata $ cp advancedsettings.xml /home/pi/.kodi/userdata/
 
+Pour régler l'erreur:
+ERROR: SMBFile->Open: Unable to open file : 'smb://
+
+Ajouter une source video qui utilise ce partage
+
+raspberrypi pi:~/.kodi/userdata $ cat passwords.xml
+<passwords>
+    <path>
+        <from pathversion="1">smb://MYHOSTSERVER</from>
+        <to pathversion="1">smb://USER:PASS@MYHOSTSERVER</to>
+    </path>
+    <path>
+        <from pathversion="1">smb://192.168.3.X/Download</from>
+        <to pathversion="1">smb://user:PASS@192.168.3.X/Download/Films/</to>
+    </path>
+</passwords>
+
+raspberrypi pi:~/.kodi/userdata $ cat advancedsettings.xml
+<advancedsettings>
+     <videodatabase>
+       <type>mysql</type>
+       <host>192.168.3.X</host>
+       <port>3306</port>
+       <user>xbmc</user>
+       <pass>xbmcpass</pass>
+       <name>xbmc_video</name>
+    </videodatabase>
+    <musicdatabase>
+       <type>mysql</type>
+       <host>192.168.3.X</host>
+       <port>3306</port>
+       <user>xbmc</user>
+       <pass>xbmcpass</pass>
+       <name>xbmc_music</name>
+    </musicdatabase>
+    <pathsubstitution>
+     <substitute>
+      <from>special://masterprofile/Thumbnails/</from>
+      <to>smb://192.168.3.X/xbmc/Thumbnails/</to>
+     </substitute>
+    </pathsubstitution>
+</advancedsettings>
+
+
 
 
