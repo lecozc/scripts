@@ -19,6 +19,8 @@ apt-mark unhold openswan
 
 echo "Europe/Paris" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
+or 
+dpkg-reconfigure tzdata 
 
 update-manager -d
 ou
