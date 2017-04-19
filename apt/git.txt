@@ -1,0 +1,45 @@
+createrepo github
+
+git config --global user.email <mail>
+
+git remote add origin https://github.com/T0FFF/xxxx.git
+
+git remote -v 
+
+git push origin master
+
+
+
+git pull https://github.com/T0FFF/xxxx.git 
+
+git init
+git add .
+git commit -m "First Commit"
+
+git status
+
+git log
+git log --pretty=oneline
+git log --pretty=oneline --max-count=2
+git log --pretty=oneline --since='5 minutes ago'
+git log --pretty=oneline --until='5 minutes ago'
+git log --pretty=oneline --author=<your name>
+git log --pretty=oneline --all
+
+Cancelling commits
+change <file>
+git add <file>
+git commit -m "Oops, we didn't want this commit"
+git revert HEAD
+or
+git revert HEAD --no-edit
+
+remove tag
+git tag -d oops
+
+merge
+git remote add ohMyZsh https://github.com/robbyrussell/oh-my-zsh.git
+git pull ohMyZsh master
+git push origin
+
+git status
