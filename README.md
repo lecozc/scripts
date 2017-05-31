@@ -1,5 +1,7 @@
 # Ubuntu / Debian
 ```
+commit 1
+commit 2
 apt-get install ssmtp mailutils zsh shellcheck
 apt-get update	&& apt-get upgrade -y && apt-get dist-upgrade -y
 apt-get clean -y &&  apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}
